@@ -1,0 +1,6 @@
+{
+  "name": "JizPI Axborot-resurs markazi",
+  "description": "Jizzakh politexnika instituti Axborot-resurs markazi uchun xorijiy va milliy ilmiy bazalardan foydalanish monitoringi va statistika tizimi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
