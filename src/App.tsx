@@ -1237,7 +1237,7 @@ export default function App() {
 
                 {/* User Type */}
                 <div className="space-y-1">
-                  <label className="font-bold text-slate-650 block">Lavozim, Unvon / Toifa:</label>
+                  <label className="font-bold text-slate-650 block">Lavozim, Unvon / Toifa: </label>
                   <select
                     className="block w-full px-3 py-2 text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
                     value={regType}
@@ -1245,7 +1245,7 @@ export default function App() {
                   >
                     <option value="Researcher">Ilmiy tadqiqotchi / Magistr</option>
                     <option value="Teacher">O'qituvchi / Assistent</option>
-                    <option value="PhD">Tayanch doktorant (PhD)</option>
+                    <option value="PhD">Tayanch doktorant (PhD, DSc, Magistr)</option>
                     <option value="Master">Magistrant</option>
                     <option value="Student">Iqtidorli talaba</option>
                     <option value="Guest">Mehmonlar (Boshqa muassasa)</option>
@@ -1383,19 +1383,19 @@ export default function App() {
               </div>
 
               {/* Informational help panel on how to access */}
-              <div className="mt-4 p-4 bg-slate-50 border border-slate-150 rounded-2xl text-center space-y-2">
+              {/* <div className="mt-4 p-4 bg-slate-50 border border-slate-150 rounded-2xl text-center space-y-2">
                 <p className="text-[10px] text-indigo-805 font-bold uppercase tracking-wider">ARM Kirish Qo'llanmasi</p>
                 <p className="text-[11px] text-slate-500 leading-relaxed font-medium">
                   Tizim administratori hisobiga kirish uchun quyidagi ma'lumotlarni tepadagi maydonlarga kiriting:
                 </p>
                 <div className="bg-white p-2.5 rounded-xl border border-slate-150 text-left font-semibold text-[11px] space-y-1 text-slate-700">
-                  <p>• Login/Pochta: <strong className="font-mono text-slate-900 select-all">umarabdullayev338@gmail.com</strong></p>
-                  <p>• Kirish paroli: <strong className="font-mono text-slate-900 select-all">28032025</strong></p>
+                  <p>• Login/Pochta: <strong className="font-mono text-slate-900 select-all"></strong></p>
+                  <p>• Kirish paroli: <strong className="font-mono text-slate-900 select-all"></strong></p>
                 </div>
                 <p className="text-[10px] text-slate-400 leading-normal">
                   Yangi foydalanuvchilar "Ro'yxatdan o'tish" havolasi orqali yangi akkaunt ochishlari hamda profil sozlamalaridan o'z ma'lumotlarini tahrirlashlari lozim.
                 </p>
-              </div>
+              </div> */}
 
             </form>
           )}
