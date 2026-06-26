@@ -153,8 +153,8 @@ export default function App() {
     if (storedDbs) {
       setDatabases(JSON.parse(storedDbs));
     } else {
-      setDatabases(DEFAULT_DATABASES);
-      localStorage.setItem("jizpi_databases", JSON.stringify(DEFAULT_DATABASES));
+      setDatabases([]);
+      localStorage.setItem("jizpi_databases", JSON.stringify([]));
     }
 
     // hydrate books/resources
@@ -162,8 +162,8 @@ export default function App() {
     if (storedResources) {
       setResources(JSON.parse(storedResources));
     } else {
-      setResources(DEFAULT_BOOKS);
-      localStorage.setItem("jizpi_books", JSON.stringify(DEFAULT_BOOKS));
+      setResources([]);
+      localStorage.setItem("jizpi_books", JSON.stringify([]));
     }
 
     // hydrate announcements
@@ -171,8 +171,8 @@ export default function App() {
     if (storedAnnouncements) {
       setAnnouncements(JSON.parse(storedAnnouncements));
     } else {
-      setAnnouncements(DEFAULT_ANNOUNCEMENTS);
-      localStorage.setItem("jizpi_announcements", JSON.stringify(DEFAULT_ANNOUNCEMENTS));
+      setAnnouncements([]);
+      localStorage.setItem("jizpi_announcements", JSON.stringify([]));
     }
 
     // hydrate notifications mailbox
@@ -180,30 +180,8 @@ export default function App() {
     if (storedNotifications) {
       setNotifications(JSON.parse(storedNotifications));
     } else {
-      const initialNotifications: NotificationMessage[] = [
-        {
-          id: "notif_1",
-          senderId: "umarabdullayev_id",
-          senderName: "Umar Abdullayev (ARM Ma'muri)",
-          targetUserId: "all",
-          title: "Xorijiy ilmiy bazalarda maqolalar tayyorlash",
-          content: "Hurmatli olimlar va ilmiy izlanuvchilar, Scopus hamda ScienceDirect bazalaridan samarali foydalanish, dars tayyorgarligi va o'z hissangizni qo'shishingiz so'raladi. Savollaringiz yoki muammolaringiz bo'lsa, javob yozib jo'nating.",
-          date: new Date().toISOString().split("T")[0],
-          replies: []
-        },
-        {
-          id: "notif_2",
-          senderId: "umarabdullayev_id",
-          senderName: "Umar Abdullayev (ARM Ma'muri)",
-          targetUserId: "all",
-          title: "Kutubxona darsliklarining elektron portalini to'ldirish",
-          content: "O'qituvchi va kafedra mudirlaridan o'z kafedralariga taalluqli darslik va o'quv qo'llanmalari havolalarini taqdim etishlarini so'raymiz.",
-          date: new Date(Date.now() - 3600000 * 24).toISOString().split("T")[0],
-          replies: []
-        }
-      ];
-      setNotifications(initialNotifications);
-      localStorage.setItem("jizpi_notifications", JSON.stringify(initialNotifications));
+      setNotifications([]);
+      localStorage.setItem("jizpi_notifications", JSON.stringify([]));
     }
 
     // hydrate logs
@@ -211,38 +189,8 @@ export default function App() {
     if (storedLogs) {
       setLogs(JSON.parse(storedLogs));
     } else {
-      const initialLogs: UsageLog[] = [
-        {
-          id: "log_mock1",
-          userId: "local-demo-id",
-          userFullName: "Dr. Jasur Tolipov",
-          userEmail: "tadqiqotchi@jizpi.uz",
-          userType: "Researcher",
-          faculty: "Sanoat texnologiyalari",
-          department: "Oliy matematika", // Using department from FACULTIES to be strictly consistent
-          databaseId: "scopus",
-          databaseName: "Scopus",
-          purpose: "Scientific Research",
-          timestamp: new Date(Date.now() - 3600000 * 2).toISOString(),
-          notes: "Izlanish: Polimer materiallar, Maqola uzatildi"
-        },
-        {
-          id: "log_mock2",
-          userId: "umarabdullayev_id",
-          userFullName: "Umar Abdullayev",
-          userEmail: "umarabdullayev338@gmail.com",
-          userType: "Researcher",
-          faculty: "Kibernetika",
-          department: "Kompyuter va dasturiy injiniring",
-          databaseId: "sciencedirect",
-          databaseName: "ScienceDirect",
-          purpose: "Scientific Research",
-          timestamp: new Date(Date.now() - 3600000 * 8).toISOString(),
-          notes: "Temir-beton qoplamalari va sun'iy intellekt"
-        }
-      ];
-      setLogs(initialLogs);
-      localStorage.setItem("jizpi_logs", JSON.stringify(initialLogs));
+      setLogs([]);
+      localStorage.setItem("jizpi_logs", JSON.stringify([]));
     }
 
     // hydrate sarxisob
@@ -250,8 +198,8 @@ export default function App() {
     if (storedSarxisob) {
       setSarxisobRecords(JSON.parse(storedSarxisob));
     } else {
-      setSarxisobRecords(DEFAULT_SARXISOB_RECORDS);
-      localStorage.setItem("jizpi_sarxisob", JSON.stringify(DEFAULT_SARXISOB_RECORDS));
+      setSarxisobRecords([]);
+      localStorage.setItem("jizpi_sarxisob", JSON.stringify([]));
     }
   };
 
@@ -338,9 +286,7 @@ export default function App() {
       setLogs(list);
       setIsDataSyncing(false);
     }, (err) => {
-      setIsOfflineMode(true);
       setIsDataSyncing(false);
-      loadOfflineData();
       handleFirestoreError(err, OperationType.LIST, "logs");
     });
 
@@ -351,9 +297,6 @@ export default function App() {
       });
       setDatabases(list);
     }, (err) => {
-      setIsOfflineMode(true);
-      setIsDataSyncing(false);
-      loadOfflineData();
       handleFirestoreError(err, OperationType.LIST, "databases");
     });
 
@@ -365,9 +308,6 @@ export default function App() {
       // Sort viewsCount descending
       setResources(list.sort((a,b) => b.viewsCount - a.viewsCount));
     }, (err) => {
-      setIsOfflineMode(true);
-      setIsDataSyncing(false);
-      loadOfflineData();
       handleFirestoreError(err, OperationType.LIST, "books");
     });
 
@@ -378,9 +318,6 @@ export default function App() {
       });
       setAnnouncements(list);
     }, (err) => {
-      setIsOfflineMode(true);
-      setIsDataSyncing(false);
-      loadOfflineData();
       handleFirestoreError(err, OperationType.LIST, "announcements");
     });
 
@@ -391,9 +328,6 @@ export default function App() {
       });
       setNotifications(list);
     }, (err) => {
-      setIsOfflineMode(true);
-      setIsDataSyncing(false);
-      loadOfflineData();
       handleFirestoreError(err, OperationType.LIST, "notifications");
     });
 
@@ -404,9 +338,6 @@ export default function App() {
       });
       setSarxisobRecords(list);
     }, (err) => {
-      setIsOfflineMode(true);
-      setIsDataSyncing(false);
-      loadOfflineData();
       handleFirestoreError(err, OperationType.LIST, "sarxisob");
     });
 
@@ -419,39 +350,6 @@ export default function App() {
       unsubSarxisob();
     };
   }, [firebaseUser]);
-
-  // Seed default data if database has empty records initially
-  useEffect(() => {
-    if (!isDataSyncing && firebaseUser) {
-      const seedData = async () => {
-        try {
-          if (databases.length === 0) {
-            for (const item of DEFAULT_DATABASES) {
-              await setDoc(doc(db, "databases", item.id), item);
-            }
-          }
-          if (resources.length === 0) {
-            for (const item of DEFAULT_BOOKS) {
-              await setDoc(doc(db, "books", item.id), item);
-            }
-          }
-          if (announcements.length === 0) {
-            for (const item of DEFAULT_ANNOUNCEMENTS) {
-              await setDoc(doc(db, "announcements", item.id), item);
-            }
-          }
-          if (sarxisobRecords.length === 0) {
-            for (const item of DEFAULT_SARXISOB_RECORDS) {
-              await setDoc(doc(db, "sarxisob", item.id), item);
-            }
-          }
-        } catch (e) {
-          console.log("Auto-seeding is skipped or read-only on guest restrictions:", e);
-        }
-      };
-      seedData();
-    }
-  }, [databases.length, resources.length, announcements.length, sarxisobRecords.length, isDataSyncing, firebaseUser]);
 
   // Admin access validation helper
   const isAdminSession = useMemo(() => {
@@ -674,47 +572,14 @@ export default function App() {
       ...logData
     };
 
-    if (isOfflineMode) {
-      const simulatedLog: UsageLog = {
-        id: "simulated_" + Date.now(),
-        ...fullLog
-      };
-      setLogs(prev => {
-        const u = [simulatedLog, ...prev];
-        localStorage.setItem("jizpi_logs", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await addDoc(collection(db, "logs"), fullLog);
     } catch (error) {
       handleFirestoreError(error, OperationType.WRITE, "logs");
-      // Fallback update to local statistics state
-      const simulatedLog: UsageLog = {
-        id: "simulated_" + Date.now(),
-        ...fullLog
-      };
-      setLogs(prev => {
-        const u = [simulatedLog, ...prev];
-        localStorage.setItem("jizpi_logs", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
   const handleIncrementViews = async (id: string) => {
-    if (isOfflineMode) {
-      setResources(prev => {
-        const u = prev.map(p => p.id === id ? { ...p, viewsCount: (p.viewsCount || 0) + 1 } : p)
-          .sort((a,b) => b.viewsCount - a.viewsCount);
-        localStorage.setItem("jizpi_books", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       const bookRef = doc(db, "books", id);
       await updateDoc(bookRef, {
@@ -722,13 +587,6 @@ export default function App() {
       });
     } catch (error) {
       handleFirestoreError(error, OperationType.UPDATE, `books/${id}`);
-      // Simulating views update locally
-      setResources(prev => {
-        const u = prev.map(p => p.id === id ? { ...p, viewsCount: (p.viewsCount || 0) + 1 } : p)
-          .sort((a,b) => b.viewsCount - a.viewsCount);
-        localStorage.setItem("jizpi_books", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
@@ -740,48 +598,18 @@ export default function App() {
       ...dbData
     };
 
-    if (isOfflineMode) {
-      setDatabases(prev => {
-        const u = [...prev, fullDb];
-        localStorage.setItem("jizpi_databases", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await setDoc(doc(db, "databases", customId), fullDb);
     } catch (err) {
       handleFirestoreError(err, OperationType.WRITE, `databases/${customId}`);
-      // Fallback
-      setDatabases(prev => {
-        const u = [...prev, fullDb];
-        localStorage.setItem("jizpi_databases", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
   const handleDeleteDatabase = async (id: string) => {
-    if (isOfflineMode) {
-      setDatabases(prev => {
-        const u = prev.filter(p => p.id !== id);
-        localStorage.setItem("jizpi_databases", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await deleteDoc(doc(db, "databases", id));
     } catch (err) {
       handleFirestoreError(err, OperationType.DELETE, `databases/${id}`);
-      // Fallback
-      setDatabases(prev => {
-        const u = prev.filter(p => p.id !== id);
-        localStorage.setItem("jizpi_databases", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
@@ -792,68 +620,26 @@ export default function App() {
       ...annData
     };
 
-    if (isOfflineMode) {
-      setAnnouncements(prev => {
-        const u = [fullAnn, ...prev];
-        localStorage.setItem("jizpi_announcements", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await setDoc(doc(db, "announcements", fullAnn.id), fullAnn);
     } catch (err) {
       handleFirestoreError(err, OperationType.WRITE, `announcements/${fullAnn.id}`);
-      setAnnouncements(prev => {
-        const u = [fullAnn, ...prev];
-        localStorage.setItem("jizpi_announcements", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
   const handleDeleteAnnouncement = async (id: string) => {
-    if (isOfflineMode) {
-      setAnnouncements(prev => {
-        const u = prev.filter(p => p.id !== id);
-        localStorage.setItem("jizpi_announcements", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await deleteDoc(doc(db, "announcements", id));
     } catch (err) {
       handleFirestoreError(err, OperationType.DELETE, `announcements/${id}`);
-      setAnnouncements(prev => {
-        const u = prev.filter(p => p.id !== id);
-        localStorage.setItem("jizpi_announcements", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
   const handleDeleteLog = async (id: string) => {
-    if (isOfflineMode) {
-      setLogs(prev => {
-        const u = prev.filter(p => p.id !== id);
-        localStorage.setItem("jizpi_logs", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await deleteDoc(doc(db, "logs", id));
     } catch (err) {
       handleFirestoreError(err, OperationType.DELETE, `logs/${id}`);
-      setLogs(prev => {
-        const u = prev.filter(p => p.id !== id);
-        localStorage.setItem("jizpi_logs", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
@@ -865,90 +651,34 @@ export default function App() {
       ...resData
     };
 
-    if (isOfflineMode) {
-      setResources(prev => {
-        const u = [...prev, fullRes].sort((a,b) => b.viewsCount - a.viewsCount);
-        localStorage.setItem("jizpi_books", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await setDoc(doc(db, "books", resourceId), fullRes);
     } catch (err) {
       handleFirestoreError(err, OperationType.WRITE, `books/${resourceId}`);
-      setResources(prev => {
-        const u = [...prev, fullRes].sort((a,b) => b.viewsCount - a.viewsCount);
-        localStorage.setItem("jizpi_books", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
   const handleDeleteResource = async (id: string) => {
-    if (isOfflineMode) {
-      setResources(prev => {
-        const u = prev.filter(p => p.id !== id);
-        localStorage.setItem("jizpi_books", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await deleteDoc(doc(db, "books", id));
     } catch (err) {
       handleFirestoreError(err, OperationType.DELETE, `books/${id}`);
-      setResources(prev => {
-        const u = prev.filter(p => p.id !== id);
-        localStorage.setItem("jizpi_books", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
   const handleEditResource = async (id: string, updatedFields: Omit<LibraryResource, "id" | "viewsCount">) => {
-    if (isOfflineMode) {
-      setResources(prev => {
-        const u = prev.map(p => p.id === id ? { ...p, ...updatedFields } : p);
-        localStorage.setItem("jizpi_books", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await updateDoc(doc(db, "books", id), updatedFields);
     } catch (err) {
       handleFirestoreError(err, OperationType.UPDATE, `books/${id}`);
-      setResources(prev => {
-        const u = prev.map(p => p.id === id ? { ...p, ...updatedFields } : p);
-        localStorage.setItem("jizpi_books", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
   const handleUpdateAnnouncement = async (id: string, updatedFields: Partial<Announcement>) => {
-    if (isOfflineMode) {
-      setAnnouncements(prev => {
-        const u = prev.map(ann => ann.id === id ? { ...ann, ...updatedFields } : ann);
-        localStorage.setItem("jizpi_announcements", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await updateDoc(doc(db, "announcements", id), updatedFields);
     } catch (err) {
       handleFirestoreError(err, OperationType.UPDATE, `announcements/${id}`);
-      setAnnouncements(prev => {
-        const u = prev.map(ann => ann.id === id ? { ...ann, ...updatedFields } : ann);
-        localStorage.setItem("jizpi_announcements", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
@@ -960,90 +690,34 @@ export default function App() {
       ...data
     };
 
-    if (isOfflineMode) {
-      setSarxisobRecords(prev => {
-        const u = [fullRecord, ...prev];
-        localStorage.setItem("jizpi_sarxisob", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await setDoc(doc(db, "sarxisob", id), fullRecord);
     } catch (err) {
       handleFirestoreError(err, OperationType.WRITE, `sarxisob/${id}`);
-      setSarxisobRecords(prev => {
-        const u = [fullRecord, ...prev];
-        localStorage.setItem("jizpi_sarxisob", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
   const handleUpdateSarxisobRecord = async (id: string, data: Partial<SarxisobRecord>) => {
-    if (isOfflineMode) {
-      setSarxisobRecords(prev => {
-        const u = prev.map(p => p.id === id ? { ...p, ...data } : p);
-        localStorage.setItem("jizpi_sarxisob", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await updateDoc(doc(db, "sarxisob", id), data);
     } catch (err) {
       handleFirestoreError(err, OperationType.UPDATE, `sarxisob/${id}`);
-      setSarxisobRecords(prev => {
-        const u = prev.map(p => p.id === id ? { ...p, ...data } : p);
-        localStorage.setItem("jizpi_sarxisob", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
   const handleDeleteSarxisobRecord = async (id: string) => {
-    if (isOfflineMode) {
-      setSarxisobRecords(prev => {
-        const u = prev.filter(p => p.id !== id);
-        localStorage.setItem("jizpi_sarxisob", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await deleteDoc(doc(db, "sarxisob", id));
     } catch (err) {
       handleFirestoreError(err, OperationType.DELETE, `sarxisob/${id}`);
-      setSarxisobRecords(prev => {
-        const u = prev.filter(p => p.id !== id);
-        localStorage.setItem("jizpi_sarxisob", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
   const handleUpdateLog = async (id: string, updatedFields: Partial<UsageLog>) => {
-    if (isOfflineMode) {
-      setLogs(prev => {
-        const u = prev.map(log => log.id === id ? { ...log, ...updatedFields } : log);
-        localStorage.setItem("jizpi_logs", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await updateDoc(doc(db, "logs", id), updatedFields);
     } catch (err) {
       handleFirestoreError(err, OperationType.UPDATE, `logs/${id}`);
-      setLogs(prev => {
-        const u = prev.map(log => log.id === id ? { ...log, ...updatedFields } : log);
-        localStorage.setItem("jizpi_logs", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
@@ -1051,9 +725,8 @@ export default function App() {
     if (!profile) return;
     const newProfile = { ...profile, ...updatedFields };
     setProfile(newProfile);
-    localStorage.setItem("jizpi_user_profile", JSON.stringify(newProfile));
 
-    if (!isOfflineMode && firebaseUser) {
+    if (firebaseUser) {
       try {
         await updateDoc(doc(db, "users", firebaseUser.uid), updatedFields);
       } catch (err) {
@@ -1070,24 +743,10 @@ export default function App() {
       ...notifData
     };
 
-    if (isOfflineMode) {
-      setNotifications(prev => {
-        const u = [newNotif, ...prev];
-        localStorage.setItem("jizpi_notifications", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       await setDoc(doc(db, "notifications", newNotif.id), newNotif);
     } catch (err) {
       handleFirestoreError(err, OperationType.WRITE, `notifications/${newNotif.id}`);
-      setNotifications(prev => {
-        const u = [newNotif, ...prev];
-        localStorage.setItem("jizpi_notifications", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
@@ -1102,23 +761,6 @@ export default function App() {
       timestamp: new Date().toISOString()
     };
 
-    if (isOfflineMode) {
-      setNotifications(prev => {
-        const u = prev.map(n => {
-          if (n.id === notifId) {
-            return {
-              ...n,
-              replies: [...(n.replies || []), newReply]
-            };
-          }
-          return n;
-        });
-        localStorage.setItem("jizpi_notifications", JSON.stringify(u));
-        return u;
-      });
-      return;
-    }
-
     try {
       const notifRef = doc(db, "notifications", notifId);
       const targetNotif = notifications.find(n => n.id === notifId);
@@ -1128,19 +770,6 @@ export default function App() {
       });
     } catch (err) {
       handleFirestoreError(err, OperationType.UPDATE, `notifications/${notifId}`);
-      setNotifications(prev => {
-        const u = prev.map(n => {
-          if (n.id === notifId) {
-            return {
-              ...n,
-              replies: [...(n.replies || []), newReply]
-            };
-          }
-          return n;
-        });
-        localStorage.setItem("jizpi_notifications", JSON.stringify(u));
-        return u;
-      });
     }
   };
 
@@ -1237,7 +866,7 @@ export default function App() {
 
                 {/* User Type */}
                 <div className="space-y-1">
-                  <label className="font-bold text-slate-650 block">Lavozim, Unvon / Toifa: </label>
+                  <label className="font-bold text-slate-650 block">Lavozim, Unvon / Toifa:</label>
                   <select
                     className="block w-full px-3 py-2 text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
                     value={regType}
@@ -1245,7 +874,7 @@ export default function App() {
                   >
                     <option value="Researcher">Ilmiy tadqiqotchi / Magistr</option>
                     <option value="Teacher">O'qituvchi / Assistent</option>
-                    <option value="PhD">Tayanch doktorant (PhD, DSc, Magistr)</option>
+                    <option value="PhD">Tayanch doktorant (PhD)</option>
                     <option value="Master">Magistrant</option>
                     <option value="Student">Iqtidorli talaba</option>
                     <option value="Guest">Mehmonlar (Boshqa muassasa)</option>
@@ -1325,79 +954,80 @@ export default function App() {
           ) : (
             
             /* Render 2: Sign In Form */
-            <form onSubmit={handleSignIn} className="p-6 space-y-4">
-              <div className="space-y-3.5 text-xs">
+            // <form onSubmit={handleSignIn} className="p-6 space-y-4">
+            //   <div className="space-y-3.5 text-xs">
                 
-                <div className="space-y-1">
-                  <label className="font-bold text-slate-600 block">Elektron pochta manzili:</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="Masalan: umarabdullayev338@gmail.com"
-                    className="block w-full px-3 py-2 text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
-                    value={loginEmail}
-                    onChange={(e) => setLoginEmail(e.target.value)}
-                  />
-                </div>
+            //     <div className="space-y-1">
+            //       <label className="font-bold text-slate-600 block">Elektron pochta manzili:</label>
+            //       <input
+            //         type="email"
+            //         required
+            //         placeholder="Masalan: umarabdullayev338@gmail.com"
+            //         className="block w-full px-3 py-2 text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
+            //         value={loginEmail}
+            //         onChange={(e) => setLoginEmail(e.target.value)}
+            //       />
+            //     </div>
 
-                <div className="space-y-1">
-                  <div className="flex items-center justify-between">
-                    <label className="font-bold text-slate-600">Parol:</label>
-                    <button
-                      type="button"
-                      onClick={handleForgotPassword}
-                      className="text-[10px] text-sky-600 hover:underline font-semibold"
-                    >
-                      Parolni unutdingizmi?
-                    </button>
-                  </div>
-                  <input
-                    type="password"
-                    required
-                    placeholder="• • • • • •"
-                    className="block w-full px-3 py-2 text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all animate-none"
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                  />
-                </div>
+            //     <div className="space-y-1">
+            //       <div className="flex items-center justify-between">
+            //         <label className="font-bold text-slate-600">Parol:</label>
+            //         <button
+            //           type="button"
+            //           onClick={handleForgotPassword}
+            //           className="text-[10px] text-sky-600 hover:underline font-semibold"
+            //         >
+            //           Parolni unutdingizmi?
+            //         </button>
+            //       </div>
+            //       <input
+            //         type="password"
+            //         required
+            //         placeholder="• • • • • •"
+            //         className="block w-full px-3 py-2 text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all animate-none"
+            //         value={loginPassword}
+            //         onChange={(e) => setLoginPassword(e.target.value)}
+            //       />
+            //     </div>
 
-              </div>
+            //   </div>
 
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  className="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm"
-                >
-                  Tizimga kirish
-                </button>
-              </div>
+            //   <div className="pt-2">
+            //     <button
+            //       type="submit"
+            //       className="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm"
+            //     >
+            //       Tizimga kirish
+            //     </button>
+            //   </div>
 
-              <div className="flex flex-col gap-2 pt-2 border-t border-slate-100 text-center">
-                <button
-                  type="button"
-                  onClick={() => setIsRegistering(true)}
-                  className="text-xs text-slate-400 hover:text-sky-600 font-semibold"
-                >
-                  Yangi foydalanuvchimisiz? <span className="underline text-slate-650">Ro'yxatdan o'tish</span>
-                </button>
-              </div>
+            //   <div className="flex flex-col gap-2 pt-2 border-t border-slate-100 text-center">
+            //     <button
+            //       type="button"
+            //       onClick={() => setIsRegistering(true)}
+            //       className="text-xs text-slate-400 hover:text-sky-600 font-semibold"
+            //     >
+            //       Yangi foydalanuvchimisiz? <span className="underline text-slate-650">Ro'yxatdan o'tish</span>
+            //     </button>
+            //   </div>
 
-              {/* Informational help panel on how to access */}
-              {/* <div className="mt-4 p-4 bg-slate-50 border border-slate-150 rounded-2xl text-center space-y-2">
-                <p className="text-[10px] text-indigo-805 font-bold uppercase tracking-wider">ARM Kirish Qo'llanmasi</p>
-                <p className="text-[11px] text-slate-500 leading-relaxed font-medium">
-                  Tizim administratori hisobiga kirish uchun quyidagi ma'lumotlarni tepadagi maydonlarga kiriting:
-                </p>
-                <div className="bg-white p-2.5 rounded-xl border border-slate-150 text-left font-semibold text-[11px] space-y-1 text-slate-700">
-                  <p>• Login/Pochta: <strong className="font-mono text-slate-900 select-all"></strong></p>
-                  <p>• Kirish paroli: <strong className="font-mono text-slate-900 select-all"></strong></p>
-                </div>
-                <p className="text-[10px] text-slate-400 leading-normal">
-                  Yangi foydalanuvchilar "Ro'yxatdan o'tish" havolasi orqali yangi akkaunt ochishlari hamda profil sozlamalaridan o'z ma'lumotlarini tahrirlashlari lozim.
-                </p>
-              </div> */}
+            //   {/* Informational help panel on how to access */}
+            //   <div className="mt-4 p-4 bg-slate-50 border border-slate-150 rounded-2xl text-center space-y-2">
+            //     <p className="text-[10px] text-indigo-805 font-bold uppercase tracking-wider">ARM Kirish Qo'llanmasi</p>
+            //     <p className="text-[11px] text-slate-500 leading-relaxed font-medium">
+            //       Tizim administratori hisobiga kirish uchun quyidagi ma'lumotlarni tepadagi maydonlarga kiriting:
+            //     </p>
+            //     <div className="bg-white p-2.5 rounded-xl border border-slate-150 text-left font-semibold text-[11px] space-y-1 text-slate-700">
+            //       <p>• Login/Pochta: <strong className="font-mono text-slate-900 select-all">umarabdullayev338@gmail.com</strong></p>
+            //       <p>• Kirish paroli: <strong className="font-mono text-slate-900 select-all">28032025</strong></p>
+            //     </div>
+            //     <p className="text-[10px] text-slate-400 leading-normal">
+            //       Yangi foydalanuvchilar "Ro'yxatdan o'tish" havolasi orqali yangi akkaunt ochishlari hamda profil sozlamalaridan o'z ma'lumotlarini tahrirlashlari lozim.
+            //     </p>
+            //   </div>
 
-            </form>
+            // </form>
+            <p>Texnik tamirlash ishlari olib borilmoqda</p>
           )}
 
         </div>
